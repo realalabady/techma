@@ -432,6 +432,14 @@ export const subscribeToUserOrders = (
 
 // ==================== Settings ====================
 
+// Per-store scoping: each storefront deployment sets VITE_STORE_ID so its
+// settings live in a dedicated document (settings/store__<id>) and don't
+// clobber sibling stores that share the same Firebase project. When no
+// VITE_STORE_ID is set we fall back to the legacy shared "store" document,
+// keeping existing single-store deployments working unchanged.
+const STORE_ID = (import.meta.env.VITE_STORE_ID || "").trim();
+export const STORE_SETTINGS_DOC_ID = STORE_ID ? `store__${STORE_ID}` : "store";
+
 export interface StoreSettings {
   store?: {
     storeName: string;
@@ -461,7 +469,7 @@ export interface StoreSettings {
 }
 
 export const getSettings = async (): Promise<StoreSettings | null> => {
-  const docRef = doc(db, "settings", "store");
+  const docRef = doc(db, "settings", STORE_SETTINGS_DOC_ID);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
     return docSnap.data() as StoreSettings;
@@ -472,7 +480,7 @@ export const getSettings = async (): Promise<StoreSettings | null> => {
 export const updateSettings = async (
   settings: Partial<StoreSettings>,
 ): Promise<void> => {
-  const docRef = doc(db, "settings", "store");
+  const docRef = doc(db, "settings", STORE_SETTINGS_DOC_ID);
   await setDoc(
     docRef,
     {
@@ -486,7 +494,7 @@ export const updateSettings = async (
 export const subscribeToSettings = (
   callback: (settings: StoreSettings | null) => void,
 ) => {
-  const docRef = doc(db, "settings", "store");
+  const docRef = doc(db, "settings", STORE_SETTINGS_DOC_ID);
   return onSnapshot(docRef, (docSnap) => {
     if (docSnap.exists()) {
       callback(docSnap.data() as StoreSettings);

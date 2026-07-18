@@ -58,14 +58,15 @@ service cloud.firestore {
     // Note: writes are handled server-side by the Admin SDK (Cloud Functions),
     // which bypasses these rules. Admin read is kept so the dashboard settings
     // pages can display saved values.
-    match /settings/store {
-      allow read: if true;
-      allow write: if isAdmin();
-    }
-    // Any other settings doc (email, tabby, tamara, cjDropshipping,
-    // googleMerchant, ...) is admin-only.
+    // Public store config docs are world-readable: the legacy shared "store"
+    // doc plus per-store docs "store__<id>" (each storefront deployment scopes
+    // its settings by VITE_STORE_ID). Every other settings doc (email, tabby,
+    // tamara, cjDropshipping, googleMerchant, ...) holds secrets and is
+    // admin-only read. All writes are admin-only.
     match /settings/{settingId} {
-      allow read: if isAdmin();
+      allow read: if settingId == 'store'
+        || settingId.matches('store__.*')
+        || isAdmin();
       allow write: if isAdmin();
     }
 

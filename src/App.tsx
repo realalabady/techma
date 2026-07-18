@@ -103,7 +103,16 @@ const App: React.FC = () => {
       setCategories(categories),
     );
     const unsubSettings = subscribeToSettings((settings) => {
-      if (settings?.store) setStoreInfo(settings.store);
+      if (settings?.store) {
+        // Store settings are now scoped per store (settings/store__<id>), so the
+        // saved store name is already store-specific and wins. VITE_STORE_NAME
+        // only fills in as a fallback when this store hasn't saved a name yet.
+        const store = { ...settings.store };
+        if (!store.storeName && import.meta.env.VITE_STORE_NAME) {
+          store.storeName = import.meta.env.VITE_STORE_NAME;
+        }
+        setStoreInfo(store);
+      }
     });
     return () => {
       unsubProducts();

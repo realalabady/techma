@@ -12,7 +12,7 @@ export interface StoreInfo {
 }
 
 export const DEFAULT_STORE_INFO: StoreInfo = {
-  storeName: "متجري",
+  storeName: import.meta.env.VITE_STORE_NAME || "متجري",
   storeEmail: "",
   storePhone: "",
   storeAddress: "",
