@@ -17,20 +17,44 @@ import {
 import { db } from "../config/firebase";
 import type { Product, Category } from "../types";
 
+// Store scoping: every storefront deployment sets VITE_STORE_ID so its
+// products (and settings) are isolated from sibling stores that share the same
+// Firebase project. Products stay in the single "products" collection but each
+// carries a storeId; queries filter by it. When VITE_STORE_ID is empty we fall
+// back to legacy behavior (no filtering, no stamping) so single-store
+// deployments keep working unchanged.
+export const STORE_ID = (import.meta.env.VITE_STORE_ID || "").trim();
+
 // ==================== Products ====================
 
 export const productsCollection = collection(db, "products");
 
-export const getProducts = async (): Promise<Product[]> => {
-  const snapshot = await getDocs(
-    query(productsCollection, orderBy("createdAt", "desc")),
-  );
-  return snapshot.docs.map((doc) => ({
+// Products for the current store. With a store id we filter by it and sort in
+// memory (avoids needing a composite Firestore index); without one we keep the
+// original ordered query over the whole collection.
+const currentStoreProductsQuery = () =>
+  STORE_ID
+    ? query(productsCollection, where("storeId", "==", STORE_ID))
+    : query(productsCollection, orderBy("createdAt", "desc"));
+
+const mapProductDocs = (
+  docs: { id: string; data: () => Record<string, any> }[],
+): Product[] => {
+  const products = docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
     createdAt: doc.data().createdAt?.toDate() || new Date(),
     updatedAt: doc.data().updatedAt?.toDate() || new Date(),
   })) as Product[];
+  // Newest first (server-side orderBy is dropped when filtering by storeId).
+  return STORE_ID
+    ? products.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+    : products;
+};
+
+export const getProducts = async (): Promise<Product[]> => {
+  const snapshot = await getDocs(currentStoreProductsQuery());
+  return mapProductDocs(snapshot.docs);
 };
 
 export const addProduct = async (
@@ -38,6 +62,8 @@ export const addProduct = async (
 ): Promise<string> => {
   const docRef = await addDoc(productsCollection, {
     ...product,
+    // Tag the product with the current store so it only shows in this store.
+    ...(STORE_ID ? { storeId: STORE_ID } : {}),
     createdAt: Timestamp.now(),
     updatedAt: Timestamp.now(),
   });
@@ -74,18 +100,9 @@ export const decrementStock = async (
 export const subscribeToProducts = (
   callback: (products: Product[]) => void,
 ) => {
-  return onSnapshot(
-    query(productsCollection, orderBy("createdAt", "desc")),
-    (snapshot) => {
-      const products = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-        createdAt: doc.data().createdAt?.toDate() || new Date(),
-        updatedAt: doc.data().updatedAt?.toDate() || new Date(),
-      })) as Product[];
-      callback(products);
-    },
-  );
+  return onSnapshot(currentStoreProductsQuery(), (snapshot) => {
+    callback(mapProductDocs(snapshot.docs));
+  });
 };
 
 // ==================== Categories ====================
@@ -432,12 +449,11 @@ export const subscribeToUserOrders = (
 
 // ==================== Settings ====================
 
-// Per-store scoping: each storefront deployment sets VITE_STORE_ID so its
-// settings live in a dedicated document (settings/store__<id>) and don't
-// clobber sibling stores that share the same Firebase project. When no
-// VITE_STORE_ID is set we fall back to the legacy shared "store" document,
-// keeping existing single-store deployments working unchanged.
-const STORE_ID = (import.meta.env.VITE_STORE_ID || "").trim();
+// Per-store scoping (STORE_ID defined near the top of this file): each
+// storefront deployment sets VITE_STORE_ID so its settings live in a dedicated
+// document (settings/store__<id>) and don't clobber sibling stores that share
+// the same Firebase project. When no VITE_STORE_ID is set we fall back to the
+// legacy shared "store" document, keeping single-store deployments working.
 export const STORE_SETTINGS_DOC_ID = STORE_ID ? `store__${STORE_ID}` : "store";
 
 export interface StoreSettings {

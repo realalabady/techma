@@ -77,7 +77,7 @@ const resolveCJImage = (url: unknown): string => {
   // buyer can point at their own Cloud Functions deployment.
   const proxyBase =
     import.meta.env.VITE_CJ_IMAGE_PROXY_BASE ||
-    "https://us-central1-jabouri-digital-library.cloudfunctions.net";
+    "https://us-central1-estore-8f76b.cloudfunctions.net";
   if (finalUrl.includes("cjdropshipping.com") || finalUrl.includes("alicdn.com")) {
     return `${proxyBase}/cjImageProxy?url=${encodeURIComponent(finalUrl)}`;
   }

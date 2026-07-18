@@ -28,6 +28,7 @@ export interface ProductVariant {
 
 export interface Product {
   id: string;
+  storeId?: string; // معرف المتجر المالك (تقسيم المنتجات بين المتاجر)
   name: string;
   nameEn: string;
   description: string;
