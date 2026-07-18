@@ -1,0 +1,551 @@
+/* ============================================
+   🎨 PREMIUM DASHBOARD HOME
+   ============================================ */
+
+.dashboard-home {
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   📊 PREMIUM STATS GRID
+   ============================================ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 20px;
+  padding: 28px;
+  display: flex;
+  gap: 20px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(20, 20, 19, 0.06);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--primary);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-card:hover::before {
+  opacity: 1;
+}
+
+.stat-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.stat-icon::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: inherit;
+  opacity: 0.15;
+  filter: blur(8px);
+  transform: translateY(4px);
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-title {
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+  display: block;
+  font-weight: 500;
+}
+
+.stat-value {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.stat-value .value {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.stat-value .unit {
+  font-size: 15px;
+  color: var(--mid);
+  font-weight: 500;
+}
+
+.stat-change {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 30px;
+  font-weight: 600;
+}
+
+.stat-change.up {
+  color: var(--accent-green);
+  background: rgba(120, 140, 93, 0.12);
+}
+
+.stat-change.down {
+  color: var(--danger);
+  background: rgba(192, 57, 43, 0.12);
+}
+
+.stat-change .period {
+  color: var(--ink-soft);
+  margin-right: 5px;
+  font-weight: 500;
+}
+
+/* ============================================
+   📈 PREMIUM CHARTS
+   ============================================ */
+.charts-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.chart-card {
+  background: white;
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(20, 20, 19, 0.06);
+  transition: all 0.3s ease;
+}
+
+.chart-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.chart-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--dark);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chart-header h3::before {
+  content: '';
+  width: 4px;
+  height: 20px;
+  background: var(--primary);
+  border-radius: 2px;
+}
+
+.chart-filter {
+  padding: 10px 18px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  background: var(--bg);
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.chart-filter:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Chart Placeholder */
+.chart-placeholder {
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.empty-chart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--mid);
+  text-align: center;
+}
+
+.empty-chart svg {
+  opacity: 0.4;
+}
+
+.empty-chart p {
+  font-weight: 600;
+  margin: 0;
+  font-size: 15px;
+}
+
+.empty-chart span {
+  font-size: 13px;
+  color: var(--mid);
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px;
+  color: var(--mid);
+  text-align: center;
+  gap: 12px;
+}
+
+.empty-state svg {
+  opacity: 0.4;
+}
+
+.empty-state p {
+  font-weight: 600;
+  margin: 0;
+}
+
+.empty-state span {
+  font-size: 13px;
+  color: var(--mid);
+}
+
+/* Premium Chart Bars */
+.chart-bars {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  height: 100%;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 0 10px;
+}
+
+.bar {
+  flex: 1;
+  max-width: 60px;
+  background: var(--line);
+  border-radius: 10px 10px 0 0;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.bar.active {
+  background: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.bar:hover {
+  background: var(--primary);
+  box-shadow: var(--shadow-sm);
+  transform: scaleY(1.02);
+}
+
+.bar span {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* ============================================
+   🏆 TOP PRODUCTS
+   ============================================ */
+.top-products {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.product-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: var(--bg);
+  border-radius: 14px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent;
+}
+
+.product-item:hover {
+  background: white;
+  border-color: var(--primary);
+  transform: translateX(-6px);
+  box-shadow: var(--shadow-sm);
+}
+
+.product-rank {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 14px;
+  color: white;
+}
+
+.product-item:nth-child(1) .product-rank {
+  background: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.product-item:nth-child(2) .product-rank {
+  background: var(--mid);
+  box-shadow: var(--shadow-sm);
+}
+
+.product-item:nth-child(3) .product-rank {
+  background: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.product-item:nth-child(n+4) .product-rank {
+  background: var(--primary);
+  box-shadow: 0 4px 12px rgba(20, 20, 19, 0.08);
+}
+
+.product-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.product-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--dark);
+}
+
+.product-sales {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.product-revenue {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--accent-green);
+  background: rgba(120, 140, 93, 0.12);
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+/* ============================================
+   📦 ORDERS CARD
+   ============================================ */
+.orders-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(20, 20, 19, 0.06);
+  overflow: hidden;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
+}
+
+.card-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--dark);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-header h3::before {
+  content: '';
+  width: 4px;
+  height: 20px;
+  background: var(--primary);
+  border-radius: 2px;
+}
+
+.card-header .view-all {
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.card-header .view-all:hover {
+  background: var(--primary);
+  color: white;
+}
+
+/* ============================================
+   🏷️ STATUS BADGES
+   ============================================ */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 25px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.status-pending {
+  background: rgba(217, 119, 87, 0.12);
+  color: var(--primary);
+}
+
+.status-processing {
+  background: rgba(106, 155, 204, 0.12);
+  color: var(--accent-blue);
+}
+
+.status-shipped {
+  background: rgba(106, 155, 204, 0.12);
+  color: var(--accent-blue);
+}
+
+.status-delivered {
+  background: rgba(120, 140, 93, 0.12);
+  color: var(--accent-green);
+}
+
+.status-cancelled {
+  background: rgba(192, 57, 43, 0.12);
+  color: var(--danger);
+}
+
+/* ============================================
+   📱 RESPONSIVE
+   ============================================ */
+@media (max-width: 1200px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .charts-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .stat-card {
+    padding: 20px;
+  }
+
+  .stat-value .value {
+    font-size: 26px;
+  }
+}
+
+  .stat-icon {
+    margin: 0 auto;
+  }
+}
+
+/* Recent Orders Table */
+.recent-orders-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.recent-orders-table th {
+  text-align: right;
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray);
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.recent-orders-table td {
+  padding: 14px 16px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--dark);
+}
+
+.recent-orders-table tr:last-child td {
+  border-bottom: none;
+}
+
+.recent-orders-table tr:hover {
+  background: var(--bg);
+}

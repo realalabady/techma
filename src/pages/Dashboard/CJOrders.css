@@ -1,0 +1,306 @@
+.cj-orders-page {
+  padding: 0;
+}
+
+.cj-orders-page .page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.cj-orders-page .page-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--dark);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cj-orders-page .header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.cj-orders-page .header-actions button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: "Tajawal", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+}
+
+.btn-sync {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-sync:hover {
+  background: var(--primary-dark, #1d4ed8);
+}
+
+.btn-sync:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* بطاقات الإحصائيات */
+.cj-stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.cj-stat-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 20px;
+  text-align: center;
+}
+
+.cj-stat-card .stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 4px;
+}
+
+.cj-stat-card .stat-label {
+  font-size: 13px;
+  color: var(--gray);
+}
+
+.cj-stat-card.balance .stat-value {
+  color: var(--success, #10b981);
+}
+
+/* جدول الطلبات */
+.cj-orders-table-wrapper {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  overflow-x: auto;
+}
+
+.cj-orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.cj-orders-table th {
+  padding: 14px 16px;
+  text-align: right;
+  font-weight: 600;
+  color: var(--gray);
+  border-bottom: 1px solid var(--border);
+  background: var(--light);
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.cj-orders-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  color: var(--dark);
+}
+
+.cj-orders-table tr:last-child td {
+  border-bottom: none;
+}
+
+.cj-orders-table tr:hover {
+  background: rgba(37, 99, 235, 0.02);
+}
+
+/* شارات الحالة */
+.cj-status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.cj-status-badge.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+.cj-status-badge.processing {
+  background: #dbeafe;
+  color: #1e40af;
+}
+.cj-status-badge.shipped {
+  background: #d1fae5;
+  color: #065f46;
+}
+.cj-status-badge.delivered {
+  background: #dcfce7;
+  color: #166534;
+}
+.cj-status-badge.cancelled {
+  background: #fee2e2;
+  color: #991b1b;
+}
+.cj-status-badge.created {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+.cj-status-badge.unpaid {
+  background: #fef3c7;
+  color: #92400e;
+}
+.cj-status-badge.unshipped {
+  background: #fce7f3;
+  color: #9d174d;
+}
+
+.cj-badge {
+  padding: 2px 8px;
+  background: var(--primary);
+  color: white;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  margin-right: 6px;
+}
+
+/* تتبع الشحنة */
+.tracking-link {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tracking-link:hover {
+  text-decoration: underline;
+}
+
+.tracking-btn {
+  padding: 6px 12px;
+  background: var(--light);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: "Tajawal", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tracking-btn:hover {
+  background: var(--border);
+}
+
+/* نافذة التتبع */
+.tracking-modal .tracking-timeline {
+  padding: 20px 0;
+}
+
+.tracking-step {
+  display: flex;
+  gap: 16px;
+  padding-bottom: 20px;
+  position: relative;
+}
+
+.tracking-step::before {
+  content: "";
+  position: absolute;
+  right: 11px;
+  top: 28px;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+}
+
+.tracking-step:last-child::before {
+  display: none;
+}
+
+.tracking-step .step-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--primary);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tracking-step .step-dot svg {
+  color: white;
+}
+
+.tracking-step .step-info {
+  flex: 1;
+}
+
+.tracking-step .step-info .step-desc {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 4px;
+}
+
+.tracking-step .step-info .step-date {
+  font-size: 12px;
+  color: var(--gray);
+}
+
+/* الرصيد */
+.balance-card {
+  background: var(--accent-blue);
+  color: white;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.balance-card .balance-info h3 {
+  font-size: 14px;
+  font-weight: 400;
+  opacity: 0.9;
+  margin-bottom: 4px;
+}
+
+.balance-card .balance-info .balance-amount {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.balance-card .balance-icon {
+  opacity: 0.3;
+}
+
+@media (max-width: 768px) {
+  .cj-stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .balance-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+}

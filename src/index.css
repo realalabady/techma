@@ -1,0 +1,12 @@
+/* Reset default Vite styles - using globals.css instead */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}

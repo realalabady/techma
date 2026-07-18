@@ -1,0 +1,30 @@
+{
+  "name": "estore-template-functions",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^5.0.0",
+    "google-auth-library": "^10.6.2",
+    "jaboory-lebrrary": "file:..",
+    "node-fetch": "^2.7.0",
+    "nodemailer": "^8.0.4"
+  },
+  "devDependencies": {
+    "@types/node-fetch": "^2.6.11",
+    "@types/nodemailer": "^7.0.11",
+    "typescript": "^5.4.0"
+  },
+  "private": true
+}
