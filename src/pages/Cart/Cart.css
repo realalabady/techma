@@ -195,14 +195,18 @@
   border-top: 1px solid var(--border);
 }
 
-.btn-danger {
+/* Scoped to .cart-actions so these win over the global .btn-outline:hover /
+   .btn-danger:hover rules (which otherwise leave the text the same red as the
+   background on hover, making the label disappear). */
+.cart-actions .btn-danger {
+  background: transparent;
   border-color: var(--danger);
   color: var(--danger);
 }
 
-.btn-danger:hover {
+.cart-actions .btn-danger:hover {
   background: var(--danger);
-  color: white;
+  color: #fff;
 }
 
 /* Cart Summary */
